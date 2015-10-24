@@ -1,2 +1,2 @@
 # hillary_emails_GADAT
-Analysis of Hillary Clinton Email's 
+Basic analysis of Hillary Clinton email's downloaded from Kaggle.
