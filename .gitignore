@@ -2,3 +2,7 @@ input
 .DS_Store
 LDA Example.ipynb
 .ipynb_checkpoints/
+eng_PleaseLDA.model
+eng_PleaseLDA.model.state
+onlyEnglishLDA.model
+onlyEnglishLDA.model.state
