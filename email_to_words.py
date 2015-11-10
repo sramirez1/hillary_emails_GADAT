@@ -12,23 +12,26 @@ def email_to_words(email_body, stem=False, english=False):
     #
     # Remove instances of \n
     email_text=re.sub("\n"," ", email_body)
+    # Remove boilerplate U.S. State Department 
+    email_text=email_text.split(r"U.S. Department of State",1)[0]
     #
     # Remove instances of B6
     email_text=re.sub("B6","", email_text)
     #
     # Replace instances of "pis" with "pls"
-    email_text=re.sub(r"pis|Pis","please",email_text)
+    email_text=re.sub(r"pis|Pis|pls|Pls","please",email_text)
+    #
+    # Replace instances of "thx" with "Thx"
+    email_text=re.sub(r"thx|Thx","thanks",email_text)
+    #
     # Remove email addresses
     email_text=re.sub(r"[\w]+@[\.\w]+","",email_text)
     #
     # Remove web addresses
-    email_text=re.sub(r"(https\://|hop\://|ttp\://|www?\.)\S+","",email_text) 
-    #
-    # Remove boilerplate U.S. State Department 
-    email_text=email_text.split(r"U\.S\. Department of State",1)[0]
+    email_text=re.sub(r"(https\://|htte/|hop\://|ttp\://|www?\.)\S+","",email_text) 
     #
     # Remove boilerplate mobile signature
-    email_text=re.sub(r"(Sent from my)(iPad|Verizon Wirless 4G LTE DROID|HTC Touch Pro|Verizon Wireless Blackberry|Blackberry Wireless Handheld|iPhone|mobile device)","",email_text)
+    email_text=re.sub(r"(Sent from my) (iPad|Verizon Wireless 4G LTE DROID|HTC Touch Pro|Verizon Wireless Blackberry|Blackberry Wireless Handheld|iPhone|mobile device)","",email_text)
     #
     # Remove non-letters        
     letters_only = re.sub("[^a-zA-Z]", " ", email_text) 
@@ -42,6 +45,17 @@ def email_to_words(email_body, stem=False, english=False):
              ,"wednesday","thursday","friday","saturday","sunday"]
     #         
     words=[w for w in words if not w in monthday]
+    #
+    #Remove words that don't contribute to topic coherence or are implicit in the 
+    #exercise
+    noninformative=["wjc","sid","sent","docx","hrc","cdm","blackberry","secretary","hillary","clinton","gov","doc"]
+    words=[w for w in words if not w in noninformative]
+    #
+    # Remove names of clinton's aides, typically these names show up email's such 
+    # as Anne-Marie Slaughter <slaughter@email.com>
+    aides=["anne","marie","slaughter","huma","abedin","cheryl","mills","blumenthal","sidney","sullivan","jacob","lona","verveer","melanne"]
+    words=[w for w in words if not w in aides]
+    #
     # In Python, searching a set is much faster than searching
     #   a list, so convert the stop words to a set
     stops = set(stopwords.words("english"))                  
