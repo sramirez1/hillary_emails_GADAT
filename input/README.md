@@ -1,14 +1,10 @@
 # hillary-clinton-emails
 
-*This is a work in progress - any help normalizing and extracting this data's much appreciated!*
+**ALL DATA WAS TAKEN FROM KAGGLE - THE REMAINING INFORMATION WAS TAKEN DIRECTLY FROM THE README PROVIDED ON KAGGLE'S WEBSITE**
 
 This repo contains code to transform [Hillary Clinton's emails released through the FOIA request](https://foia.state.gov/Search/Results.aspx?collection=Clinton_Email) from raw PDF documents to CSV files and a SQLite database, making it easier to understand and analyze the documents.
 
 **[A zip of the extracted data is available for download on Kaggle](https://www.kaggle.com/c/hillary-clinton-emails/data)**.
-
-Check out some analytics on this data on **[Kaggle Scripts](https://www.kaggle.com/c/hillary-clinton-emails/scripts)**.
-
-Note that conversion is very imprecise: there's plenty of room to improve the PDF conversion, the sender/receiver extraction, and the body text extraction.
 
 # Extracted data
 
@@ -63,31 +59,3 @@ This file currently contains the following fields:
 ## database.sqlite
 
 This SQLite database contains all of the above tables (Emails, Persons, Aliases, and EmailReceivers) with their corresponding fields. You can see the schema and ingest code under [scripts/sqlImport.sql](https://github.com/benhamner/hillary-clinton-emails/blob/master/scripts/sqliteImport.sql)
-
-# Contributing: next steps
-
- - Improve the From/To address extraction mechanisms
- - Normalize various email address representations to people
- - Improve the BodyText extraction
-
-# Running the download and extraction code
-
-Running `make all` in the root directory will download the data (~162mb total) and create the output files, assuming you have all the requirements installed.
-
-# Requirements
-
-*This has only been tested on OS X, it may or may not work on other operating systems.*
-
- - python3
-   - pandas
-   - arrow
-   - numpy
- - pdftotext (utility to transform a PDF document to text)
- - GNU make
- - sqlite3
-
-# References
-
-The source PDF documents for this repo were downlaoded from the [WSJ Clinton Inbox search](http://graphics.wsj.com/hillary-clinton-email-documents/).
-
-I created this project before I realized the WSJ also open-sourced some code they used to create the Inbox Search. Subsequently, I've included some material from their open source project as well: I used their [HRCEMAIL_names.csv](https://raw.githubusercontent.com/wsjdata/clinton-email-cruncher/d8dc1916465b90e4147460f9e432cf9cafc8d3b5/HRCEMAIL_names.csv) to seed [alias_person.csv](https://github.com/benhamner/hillary-clinton-emails/blob/master/versionedInput/alias_person.csv). I also scraped metadata from foia.state.gov in a similar fashion as they did in [downloadMetadata.py](https://github.com/wsjdata/clinton-email-cruncher/blob/master/downloadMetadata.py).
